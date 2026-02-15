@@ -17,13 +17,29 @@ body{
 }
 
 header{
-  background:#111;
-  color:white;
-  padding:20px 8%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(17,17,17,0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
+
+/* Efecto cuando haces scroll */
+header.scrolled{
+  padding: 12px 8%;
+  background: #000;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
 
 header h1{
   font-size:1.2rem;
