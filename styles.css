@@ -57,11 +57,13 @@ nav a:hover{
   color:var(--primary);
 }
 
-.hero{
-  background:linear-gradient(to right,#111,#222);
-  color:white;
-  padding:110px 8%;
-  text-align:center;
+.hero {
+  background: 
+    linear-gradient(to right, rgba(29, 28, 28, 0.8), rgba(34,34,34,0.8)),
+    url("images_optimizadas/ima1.jpg") center/cover no-repeat;
+  color: rgb(232, 229, 229);
+  padding: 110px 8%;
+  text-align: center;
 }
 
 .hero h2{

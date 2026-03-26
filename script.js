@@ -9,4 +9,30 @@ window.addEventListener("scroll", function(){
 });
 
 
+// Lista de imágenes en tu carpeta
+  const images = [
+    "images_optimizadas/ima1.jpg",
+    "images_optimizadas/ima2.jpg",
+    "images_optimizadas/ima3.jpg",
+    "images_optimizadas/ima4.jpg"
+    
+  ];
+
+  let currentIndex = 0;
+  const hero = document.querySelector(".hero");
+
+  function changeBackground() {
+    hero.style.background = `
+      linear-gradient(to right, rgba(29, 28, 28, 0.8), rgba(34,34,34,0.8)),
+      url(${images[currentIndex]}) center/cover no-repeat
+    `;
+    currentIndex = (currentIndex + 1) % images.length;
+  }
+
+  // Cambiar cada 3 segundos
+  setInterval(changeBackground, 3000);
+
+  // Inicializar con la primera imagen
+  changeBackground();
+
 
