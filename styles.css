@@ -11,9 +11,34 @@
   font-family:Arial, Helvetica, sans-serif;
 }
 
-body{
-  line-height:1.6;
-  color:#333;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  opacity: 0; /* comienza invisible */
+  background: linear-gradient(270deg, #fceabb, #f8b500, #a8edea, #fed6e3);
+  background-size: 400% 400%;
+  animation: aparecer 2.5s ease forwards, moverFondo 20s ease infinite;
+}
+
+/* Animación de entrada */
+@keyframes aparecer {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animación del gradiente pastel */
+@keyframes moverFondo {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 header{
