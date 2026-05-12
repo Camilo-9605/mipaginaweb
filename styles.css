@@ -297,6 +297,12 @@ footer{
   border: 0;
 }
 
+/* Aplica a todos los <ul> */
+ul {
+  list-style-type: none;   /* Quita los puntos */
+  padding: 0;              /* Elimina el espacio interno */
+  margin: 0;               /* Elimina el espacio externo */
+}
 
 
 
