@@ -308,17 +308,41 @@ ul {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: #222;
-  color: #fff;
+  background: linear-gradient(90deg, #1a1a1a, #2c2c2c);
+  color: #f1f1f1;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   padding: 1rem;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+  animation: slideUp 0.6s ease-out;
 }
+
+.cookie-banner p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
 .cookie-banner button {
-  background: #ff5722;
-  color: #fff;
+  background: #00ffcc;
+  color: #1a1a1a;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
+  margin-left: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
 }
+
+.cookie-banner button:hover {
+  transform: scale(1.05);
+  background: #00e6b8;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
 
 
