@@ -304,5 +304,21 @@ ul {
   margin: 0;               /* Elimina el espacio externo */
 }
 
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+.cookie-banner button {
+  background: #ff5722;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
 
 
