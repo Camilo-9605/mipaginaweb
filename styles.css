@@ -304,46 +304,52 @@ ul {
   margin: 0;               /* Elimina el espacio externo */
 }
 
-.cookie-invasivo {
+/* Banner de cookies */
+.banner-cookies {
+  /* 1. Posición fija y centrada abajo */
   position: fixed;
-  opacity: 1.1;
-  bottom: 0;
-  left: 0;
-  height: 50%;
-  width: 30%;
-  background: linear-gradient(135zdeg, #0a0a0a, #1f1f1f);
-  color: #fff;
+  bottom: 20px;          
+  left: 50%;             
+  transform: translateX(-50%); 
+  
+  /* 2. Tamaño y diseño */
+  width: 90%;            
+  max-width: 400px;      
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.95); 
+  
+  /* 3. Estilo visual */
+  border-radius: 8px;    
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
+  z-index: 9999;         
+
+  /* 4. Tipografía */
   font-family: 'Poppins', sans-serif;
-  padding: 1.5rem;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
-  z-index: 9999;
-  animation: pulseGlow 2s infinite alternate;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #333;
+
+  /* 5. Animación */
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.cookie-invasivo p {
-  font-size: 1rem;
-  margin: 0 0 1rem 0;
-  text-align: center;
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
-.cookie-invasivo button {
-  background: #00ffe0;
-  color: #000;
+/* Botón dentro del banner */
+.banner-cookies button {
+  background: #0078ff;
+  color: #fff;
   border: none;
-  padding: 0.8rem 1.6rem;
-  margin: 0 0.5rem;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-.cookie-invasivo button:hover {
-  transform: scale(1.1);
-  background: #00d9c0;
-}
-
-@keyframes pulseGlow {
-  from { box-shadow: 0 -4px 20px rgba(0,255,224,0.3); }
-  to { box-shadow: 0 -4px 30px rgba(0,255,224,0.6); }
+.banner-cookies button:hover {
+  background: #005fcc;
 }
