@@ -306,34 +306,29 @@ ul {
 
 /* Banner de cookies */
 .banner-cookies {
-  /* 1. Posición fija y centrada abajo */
+  /* Posición fija y centrada abajo */
   position: fixed;
-  bottom: 20px;          
-  left: 50%;             
-  transform: translateX(-50%); 
-  
-  /* 2. Tamaño y diseño */
-  width: 90%;            
-  max-width: 400px;      
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Tamaño y diseño */
+  width: 90%;
+  max-width: 400px;
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.95); 
-  
-  /* 3. Estilo visual */
-  border-radius: 8px;    
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
-  z-index: 9999;         
+  background-color: rgba(255, 255, 255, 0.95);
 
-  /* 4. Tipografía */
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: #333;
+  /* Estilo visual */
+  border-radius: 8px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
 
-  /* 5. Animación */
+/* Animación opcional (separada, no daña el estilo base) */
+.banner-cookies.fade-in {
   animation: fadeInUp 0.6s ease-out;
 }
 
-/* Animación de entrada */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translate(-50%, 20px); }
   to { opacity: 1; transform: translate(-50%, 0); }
