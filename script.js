@@ -35,7 +35,7 @@ window.addEventListener("scroll", function(){
   // Inicializar con la primera imagen
   changeBackground();
 
-const banner = document.getElementById("cookie-banner");
+const banner = document.getElementById("banner-cookies");
 const button = document.getElementById("accept-cookies");
 
 if (!localStorage.getItem("cookiesAccepted")) {
