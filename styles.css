@@ -362,7 +362,15 @@ a:hover {
   transform: scale(1.05);
 }
 
+/* Celulares pequeños */
+@media (max-width: 480px) {
+  .Navbar { flex-direction: column; font-size: 14px; }
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Celulares medianos y tablets */
 @media (max-width: 768px) {
   .Navbar { flex-direction: column; text-align: center; }
   .grid { grid-template-columns: 1fr; }
 }
+
