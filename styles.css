@@ -83,6 +83,9 @@ nav a:hover{
 }
 
 .hero {
+  margin-left: 15px;
+  margin-top: 70px;
+  width: 800px;
   background: 
     linear-gradient(to right, rgba(29, 28, 28, 0.8), rgba(34,34,34,0.8)),
     url("images_optimizadas/ima1.jpg") center/cover no-repeat;
@@ -341,4 +344,20 @@ ul {
 
 .banner-cookies button:hover {
   background: #005fcc;
+}
+
+a {
+  backdrop-filter: blur(30px);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
 }
