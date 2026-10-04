@@ -291,7 +291,7 @@ footer {
   font-size: 0.85rem;
 }
 
-/* ========== WHATSAPP CON EFECTO GLASS ========== */
+/* ========== WHATSAPP ========== */
 .whatsapp-float {
   position: fixed;
   bottom: 20px;
@@ -311,19 +311,23 @@ footer {
   box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
   border: 2px solid rgba(255, 255, 255, 0.18);
 
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estado cuando hace scroll hacia arriba (solo se mueve, no se esconde) */
+/* Solo se desliza hacia abajo (NO se esconde) */
 .whatsapp-float.hide {
-  transform: translateY(80px);   /* se desliza hacia abajo */
-  /* Sin opacity ni pointer-events para que no desaparezca */
+  transform: translateY(90px);
 }
 
 .whatsapp-float:hover {
   transform: scale(1.05);
   background: rgba(37, 211, 102, 0.95);
   box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
+}
+
+/* Cuando tiene .hide + hover */
+.whatsapp-float.hide:hover {
+  transform: translateY(90px) scale(1.05);
 }
 
 /* ========== MAPA ========== */
