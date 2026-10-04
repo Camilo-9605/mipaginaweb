@@ -314,11 +314,10 @@ footer {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estado oculto (se cae hacia abajo) */
+/* Estado cuando hace scroll hacia arriba (solo se mueve, no se esconde) */
 .whatsapp-float.hide {
-  transform: translateY(120px);
-  opacity: 0;
-  pointer-events: none;
+  transform: translateY(80px);   /* se desliza hacia abajo */
+  /* Sin opacity ni pointer-events para que no desaparezca */
 }
 
 .whatsapp-float:hover {
