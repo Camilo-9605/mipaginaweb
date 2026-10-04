@@ -21,14 +21,12 @@ body {
   animation: aparecer 2.5s ease forwards, moverFondo 20s ease infinite;
 }
 
-/* Animación de entrada */
 @keyframes aparecer {
   to {
     opacity: 1;
   }
 }
 
-/* Animación del gradiente pastel */
 @keyframes moverFondo {
   0% {
     background-position: 0% 50%;
@@ -79,24 +77,29 @@ nav {
   justify-content: flex-end;
 }
 
-nav a {
-  color: white;
+/* ===== EFECTO GLASS EN LOS ENLACES <a> ===== */
+nav a,
+a:not(.btn):not(.whatsapp-float) {
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  padding: 8px 16px;
+  border-radius: 8px;
   text-decoration: none;
-  margin-left: 0;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  display: inline-block;
   font-size: 0.9rem;
-  transition: 0.3s;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
 }
 
-nav a:hover {
+nav a:hover,
+a:not(.btn):not(.whatsapp-float):hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.05);
   color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
-  transform: none;
+  box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
 }
 
 /* ========== HERO ========== */
@@ -110,7 +113,6 @@ nav a:hover {
   color: rgb(232, 229, 229);
   padding: 90px 6%;
   text-align: center;
-  border-radius: 0;
 }
 
 .hero h2 {
@@ -127,6 +129,7 @@ nav a:hover {
   line-height: 1.6;
 }
 
+/* Botón principal */
 .btn {
   display: inline-block;
   padding: 14px 28px;
@@ -139,13 +142,14 @@ nav a:hover {
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  box-shadow: none;
+  box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
   backdrop-filter: none;
 }
 
 .btn:hover {
   background: #121010;
   transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
 }
 
 /* ========== SECCIONES ========== */
@@ -287,28 +291,40 @@ footer {
   font-size: 0.85rem;
 }
 
-/* ========== WHATSAPP ========== */
+/* ========== WHATSAPP CON EFECTO GLASS ========== */
 .whatsapp-float {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #25D366;
+  background: rgba(37, 211, 102, 0.85);
   color: white;
   padding: 14px 18px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: bold;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  z-index: 999;
   font-size: 0.95rem;
-  border: none;
-  backdrop-filter: none;
+  z-index: 999;
+
+  /* Efecto glass */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado oculto (se cae hacia abajo) */
+.whatsapp-float.hide {
+  transform: translateY(120px);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .whatsapp-float:hover {
   transform: scale(1.05);
-  background: #1ebe57;
+  background: rgba(37, 211, 102, 0.95);
+  box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
 }
 
 /* ========== MAPA ========== */
@@ -332,7 +348,6 @@ footer {
   border: 0;
 }
 
-/* ========== LISTAS ========== */
 ul {
   list-style-type: none;
   padding: 0;
@@ -375,29 +390,10 @@ ul {
   background: #005fcc;
 }
 
-/* Estilos generales de enlaces (solo para los que no tienen clase específica) */
-a:not(nav a):not(.btn):not(.whatsapp-float) {
-  backdrop-filter: blur(30px);
-  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  padding: 10px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: white;
-  background: rgba(0, 0, 0, 0.3);
-  display: inline-block;
-}
-
-a:not(nav a):not(.btn):not(.whatsapp-float):hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.05);
-}
-
 /* ============================================
    MEDIA QUERIES - RESPONSIVE
    ============================================ */
 
-/* Tablets y pantallas medianas */
 @media (max-width: 900px) {
   .hero {
     padding: 80px 5%;
@@ -416,7 +412,6 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
   }
 }
 
-/* Tablets y móviles grandes */
 @media (max-width: 768px) {
   header {
     padding: 14px 5%;
@@ -435,13 +430,14 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
     gap: 6px;
   }
 
-  nav a {
+  nav a,
+  a:not(.btn):not(.whatsapp-float) {
     font-size: 0.85rem;
-    padding: 5px 10px;
+    padding: 6px 12px;
   }
 
   .hero {
-    margin-top: 110px; /* más espacio porque el header crece */
+    margin-top: 110px;
     padding: 70px 5%;
   }
 
@@ -463,7 +459,7 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
   }
 
   .map-responsive {
-    padding-bottom: 60%; /* más alto en móvil */
+    padding-bottom: 60%;
   }
 
   .cta {
@@ -478,7 +474,6 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
   }
 }
 
-/* Móviles */
 @media (max-width: 480px) {
   header {
     padding: 12px 4%;
@@ -488,9 +483,10 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
     font-size: 1.05rem;
   }
 
-  nav a {
+  nav a,
+  a:not(.btn):not(.whatsapp-float) {
     font-size: 0.8rem;
-    padding: 4px 8px;
+    padding: 5px 10px;
   }
 
   .hero {
@@ -554,7 +550,6 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
   }
 }
 
-/* Móviles muy pequeños */
 @media (max-width: 360px) {
   .hero h2 {
     font-size: 1.45rem;
@@ -564,9 +559,10 @@ a:not(nav a):not(.btn):not(.whatsapp-float):hover {
     gap: 4px;
   }
 
-  nav a {
+  nav a,
+  a:not(.btn):not(.whatsapp-float) {
     font-size: 0.75rem;
-    padding: 4px 7px;
+    padding: 4px 8px;
   }
 }
 

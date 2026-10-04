@@ -47,3 +47,19 @@ button.addEventListener("click", () => {
   banner.style.display = "none";
 });
 
+let lastScroll = 0;
+const whatsappBtn = document.querySelector('.whatsapp-float');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      // Scroll hacia abajo → se esconde (cae)
+      whatsappBtn.classList.add('hide');
+    } else {
+      // Scroll hacia arriba → aparece
+      whatsappBtn.classList.remove('hide');
+    }
+
+    lastScroll = currentScroll;
+  });
