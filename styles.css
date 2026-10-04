@@ -361,3 +361,8 @@ a:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: scale(1.05);
 }
+
+@media (max-width: 768px) {
+  .Navbar { flex-direction: column; text-align: center; }
+  .grid { grid-template-columns: 1fr; }
+}
