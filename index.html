@@ -22,13 +22,12 @@
         <a href="#ubicacion" class="btn-nav">ubicacion</a>
       </nav>
 
-      <div class="overlay" id="overlay"></div>
-
-      <div class="hamburger" id="hamburger">
+      <!-- Botón Hamburguesa -->
+      <button class="hamburger" aria-label="Menú">
         <span></span>
         <span></span>
         <span></span>
-      </div>
+      </button>
     </header>
 
     <section class="hero">
@@ -154,10 +153,22 @@
 
     <section id="contacto">
       <h2 class="section-title">Hablemos de tu negocio</h2>
-      <form id="contactForm" method="POST" action="http://localhost:3000/contact">
+      <form
+        id="contactForm"
+        method="POST"
+        action="http://localhost:3000/contact"
+      >
         <input type="text" name="nombre" placeholder="Nombre" required />
-        <input type="email" name="email" placeholder="Correo electrónico" required />
-        <textarea name="negocio" placeholder="Cuéntame qué tipo de negocio tienes"></textarea>
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          required
+        />
+        <textarea
+          name="negocio"
+          placeholder="Cuéntame qué tipo de negocio tienes"
+        ></textarea>
         <button type="submit" class="btn">Enviar</button>
       </form>
     </section>

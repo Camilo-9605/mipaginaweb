@@ -48,17 +48,33 @@ button.addEventListener("click", () => {
 });
 
 
-let lastScroll = 0;
-const whatsappBtn = document.querySelector('.whatsapp-float');
+// Menú hamburguesa
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('nav');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+
+  // Cerrar menú al hacer clic en un enlace
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+    });
+  });
+
+  // WhatsApp - se desliza hacia abajo al hacer scroll hacia arriba
+  let lastScroll = 0;
+  const whatsappBtn = document.querySelector('.whatsapp-float');
 
   window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
     if (currentScroll < lastScroll) {
-      // Scroll hacia arriba → baja el botón
       whatsappBtn.classList.add('hide');
     } else {
-      // Scroll hacia abajo → sube el botón
       whatsappBtn.classList.remove('hide');
     }
 

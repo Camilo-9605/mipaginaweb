@@ -55,8 +55,6 @@ header {
   align-items: center;
   z-index: 1000;
   transition: all 0.3s ease;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 header.scrolled {
@@ -70,16 +68,15 @@ header h1 {
   white-space: nowrap;
 }
 
+/* Navegación normal (escritorio) */
 nav {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
-  justify-content: flex-end;
+  align-items: center;
 }
 
-/* ===== EFECTO GLASS EN LOS ENLACES <a> ===== */
-nav a,
-a:not(.btn):not(.whatsapp-float) {
+/* Enlaces con efecto glass */
+nav a {
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
@@ -94,12 +91,47 @@ a:not(.btn):not(.whatsapp-float) {
   font-size: 0.9rem;
 }
 
-nav a:hover,
-a:not(.btn):not(.whatsapp-float):hover {
+nav a:hover {
   background: rgba(255, 255, 255, 0.12);
   transform: scale(1.05);
   color: var(--primary);
   box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
+}
+
+/* ========== BOTÓN HAMBURGUESA ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Animación de la X cuando está abierto */
+.hamburger.active span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
 }
 
 /* ========== HERO ========== */
@@ -143,7 +175,6 @@ a:not(.btn):not(.whatsapp-float):hover {
   cursor: pointer;
   font-size: 1rem;
   box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
-  backdrop-filter: none;
 }
 
 .btn:hover {
@@ -305,7 +336,6 @@ footer {
   font-size: 0.95rem;
   z-index: 999;
 
-  /* Efecto glass */
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
@@ -314,7 +344,6 @@ footer {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Solo se desliza hacia abajo (NO se esconde) */
 .whatsapp-float.hide {
   transform: translateY(90px);
 }
@@ -325,7 +354,6 @@ footer {
   box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
 }
 
-/* Cuando tiene .hide + hover */
 .whatsapp-float.hide:hover {
   transform: translateY(90px) scale(1.05);
 }
@@ -394,7 +422,7 @@ ul {
 }
 
 /* ============================================
-   MEDIA QUERIES - RESPONSIVE
+   MEDIA QUERIES - RESPONSIVE + HAMBURGUESA
    ============================================ */
 
 @media (max-width: 900px) {
@@ -415,32 +443,44 @@ ul {
   }
 }
 
+/* Tablets y móviles - Menú hamburguesa */
 @media (max-width: 768px) {
-  header {
-    padding: 14px 5%;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  header.scrolled {
-    padding: 12px 5%;
+  .hamburger {
+    display: flex;
   }
 
   nav {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: rgba(17, 17, 17, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
     justify-content: flex-start;
-    gap: 6px;
+    align-items: flex-start;
+    padding: 80px 30px 40px;
+    gap: 20px;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
   }
 
-  nav a,
-  a:not(.btn):not(.whatsapp-float) {
-    font-size: 0.85rem;
-    padding: 6px 12px;
+  nav.active {
+    right: 0;
+  }
+
+  nav a {
+    width: 100%;
+    text-align: left;
+    padding: 12px 18px;
+    font-size: 1rem;
   }
 
   .hero {
-    margin-top: 110px;
+    margin-top: 80px;
     padding: 70px 5%;
   }
 
@@ -486,14 +526,12 @@ ul {
     font-size: 1.05rem;
   }
 
-  nav a,
-  a:not(.btn):not(.whatsapp-float) {
-    font-size: 0.8rem;
-    padding: 5px 10px;
+  nav {
+    width: 100%;
   }
 
   .hero {
-    margin-top: 120px;
+    margin-top: 70px;
     padding: 60px 4%;
   }
 
@@ -557,15 +595,4 @@ ul {
   .hero h2 {
     font-size: 1.45rem;
   }
-
-  nav {
-    gap: 4px;
-  }
-
-  nav a,
-  a:not(.btn):not(.whatsapp-float) {
-    font-size: 0.75rem;
-    padding: 4px 8px;
-  }
 }
-
