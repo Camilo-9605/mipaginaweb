@@ -425,9 +425,9 @@ ul {
    MEDIA QUERIES - RESPONSIVE + HAMBURGUESA
    ============================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   .hero {
-    padding: 80px 5%;
+    padding: 80px;
   }
 
   .hero h2 {
@@ -480,6 +480,8 @@ ul {
   }
 
   .hero {
+    text-align: justify;
+    width: 100px;
     margin-top: 80px;
     padding: 70px 5%;
   }
