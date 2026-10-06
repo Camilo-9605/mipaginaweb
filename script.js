@@ -1,82 +1,85 @@
-//document.getElementById("contactForm").addEventListener("submit", function(e){
- // e.preventDefault();
-  //alert("Gracias por tu mensaje. Te contactaremos pronto.");
-//});
+document.addEventListener("DOMContentLoaded", () => {
 
-window.addEventListener("scroll", function(){
-  const header = document.querySelector("header");
-  header.classList.toggle("scrolled", window.scrollY > 50);
-});
+  // ==============================
+  // 1. MENÚ HAMBURGUESA (Slide + Crossfade)
+  // ==============================
+  const hamburger = document.querySelector(".hamburger");
+  const nav = document.querySelector("nav");
 
+  if (hamburger && nav) {
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      nav.classList.toggle("active");
+    });
 
-// Lista de imágenes en tu carpeta
-  const images = [
-    "images_optimizadas/ima1.jpg",
-    "images_optimizadas/ima2.jpg",
-    "images_optimizadas/ima3.jpg",
-    "images_optimizadas/ima4.jpg"
-    
-  ];
-
-  let currentIndex = 0;
-  const hero = document.querySelector(".hero");
-
-  function changeBackground() {
-    hero.style.background = `
-      linear-gradient(to right, rgba(29, 28, 28, 0.8), rgba(34,34,34,0.8)),
-      url(${images[currentIndex]}) center/cover no-repeat
-    `;
-    currentIndex = (currentIndex + 1) % images.length;
+    // Cerrar menú al hacer clic en un enlace
+    nav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        nav.classList.remove("active");
+      });
+    });
   }
 
-  // Cambiar cada 3 segundos
-  setInterval(changeBackground, 3000);
+  // ==============================
+  // 2. HEADER FLOTANTE (efecto scrolled)
+  // ==============================
+  const header = document.querySelector(".header");
 
-  // Inicializar con la primera imagen
-  changeBackground();
-
-const banner = document.getElementById("banner-cookies");
-const button = document.getElementById("accept-cookies");
-
-if (!localStorage.getItem("cookiesAccepted")) {
-  banner.style.display = "block";
-}
-
-button.addEventListener("click", () => {
-  localStorage.setItem("cookiesAccepted", "true");
-  banner.style.display = "none";
-});
-
-
-// Menú hamburguesa
-  const hamburger = document.querySelector('.hamburger');
-  const nav = document.querySelector('nav');
-
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    nav.classList.toggle('active');
-  });
-
-  // Cerrar menú al hacer clic en un enlace
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      nav.classList.remove('active');
-    });
-  });
-
-  // WhatsApp - se desliza hacia abajo al hacer scroll hacia arriba
-  let lastScroll = 0;
-  const whatsappBtn = document.querySelector('.whatsapp-float');
-
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScroll < lastScroll) {
-      whatsappBtn.classList.add('hide');
-    } else {
-      whatsappBtn.classList.remove('hide');
+  window.addEventListener("scroll", () => {
+    if (header) {
+      if (window.scrollY > 40) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
     }
-
-    lastScroll = currentScroll <= 0 ? 0 : currentScroll;
   });
+
+  // ==============================
+  // 3. BOTÓN WHATSAPP (esconder al bajar)
+  // ==============================
+  const whatsappBtn = document.querySelector(".whatsapp-float");
+  let lastScroll = 0;
+
+  if (whatsappBtn) {
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScroll && currentScroll > 150) {
+        // Bajando → esconder
+        whatsappBtn.classList.add("hide");
+      } else {
+        // Subiendo → mostrar
+        whatsappBtn.classList.remove("hide");
+      }
+
+      lastScroll = currentScroll;
+    });
+  }
+
+  // ==============================
+  // 4. BANNER DE COOKIES
+  // ==============================
+  const cookieBanner = document.querySelector(".banner-cookies") || document.getElementById("banner-cookies");
+  const acceptBtn = cookieBanner?.querySelector("button") || document.getElementById("accept-cookies");
+
+  if (localStorage.getItem("cookiesAccepted")) {
+    cookieBanner?.remove();
+  }
+
+  if (acceptBtn && cookieBanner) {
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem("cookiesAccepted", "true");
+
+      cookieBanner.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+      cookieBanner.style.opacity = "0";
+      cookieBanner.style.transform = "translateX(-50%) translateY(20px)";
+
+      setTimeout(() => {
+        cookieBanner.remove();
+      }, 400);
+    });
+  }
+
+});

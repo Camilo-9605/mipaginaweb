@@ -1,129 +1,120 @@
 :root {
   --primary: #e10600;
+  --primary-soft: #ff4d4d;
   --dark: #111;
-  --light: #f4f4f4;
+  --clay-bg: #f4f7fb;
+  --clay-shadow-dark: #c5d0de;
+  --clay-shadow-light: #ffffff;
+  --white: #ffffff;
+  --text-muted: #555;
+  --radius: 24px;
+  --transition: 0.3s ease;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   min-height: 100vh;
+  background: #f8fafc;
+  color: var(--dark);
   opacity: 0;
-  background: linear-gradient(270deg, #fceabb, #f8b500, #a8edea, #fed6e3);
-  background-size: 400% 400%;
-  animation: aparecer 2.5s ease forwards, moverFondo 20s ease infinite;
+  animation: aparecer 1s ease forwards;
 }
 
 @keyframes aparecer {
-  to {
-    opacity: 1;
-  }
+  to { opacity: 1; }
 }
 
-@keyframes moverFondo {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* ========== HEADER ========== */
-header {
+/* ========== HEADER MINIMALISTA FLOTANTE ========== */
+.header {
   position: fixed;
-  top: 0;
+  top: 20px;
   left: 0;
   width: 100%;
-  background: rgba(17, 17, 17, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: white;
-  padding: 16px 6%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.header-container {
+  width: 92%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 100px;
+  padding: 12px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
-  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  pointer-events: auto;
+  transition: all 0.4s ease;
 }
 
-header.scrolled {
-  padding: 12px 6%;
-  background: #000;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+.header.scrolled .header-container {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
-header h1 {
-  font-size: 1.15rem;
-  white-space: nowrap;
+.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--dark);
 }
 
-/* Navegación normal (escritorio) */
 nav {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-/* Enlaces con efecto glass */
 nav a {
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  padding: 8px 16px;
-  border-radius: 8px;
   text-decoration: none;
-  color: white;
-  background: rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  display: inline-block;
-  font-size: 0.9rem;
+  color: var(--dark);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 50px;
+  transition: var(--transition);
 }
 
 nav a:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: scale(1.05);
+  background: rgba(225, 6, 0, 0.08);
   color: var(--primary);
-  box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
 }
 
-/* ========== BOTÓN HAMBURGUESA ========== */
+/* Hamburguesa */
 .hamburger {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 28px;
-  height: 20px;
+  width: 26px;
+  height: 18px;
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 0;
-  z-index: 1001;
+  z-index: 1002;
 }
 
 .hamburger span {
   display: block;
   width: 100%;
-  height: 3px;
-  background: white;
+  height: 2.5px;
+  background: var(--dark);
   border-radius: 3px;
-  transition: all 0.3s ease;
+  transition: var(--transition);
 }
 
-/* Animación de la X cuando está abierto */
 .hamburger.active span:nth-child(1) {
-  transform: translateY(8.5px) rotate(45deg);
+  transform: translateY(7.5px) rotate(45deg);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -131,156 +122,213 @@ nav a:hover {
 }
 
 .hamburger.active span:nth-child(3) {
-  transform: translateY(-8.5px) rotate(-45deg);
+  transform: translateY(-7.5px) rotate(-45deg);
 }
 
 /* ========== HERO ========== */
 .hero {
-  margin: 70px auto 0;
-  width: 100%;
-  max-width: 1200px;
-  background:
-    linear-gradient(to right, rgba(29, 28, 28, 0.8), rgba(34, 34, 34, 0.8)),
-    url("images_optimizadas/ima1.jpg") center/cover no-repeat;
-  color: rgb(232, 229, 229);
-  padding: 90px 6%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  padding: 140px 6% 80px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fff5f5, #f0f7ff, #fff9f0);
+}
+
+.hero-content {
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero h2 {
-  font-size: 2.4rem;
-  margin-bottom: 18px;
+  font-size: clamp(2rem, 5vw, 3.2rem);
   line-height: 1.2;
+  margin-bottom: 20px;
+  font-weight: 800;
 }
 
 .hero p {
-  max-width: 650px;
-  margin: 0 auto 30px;
-  opacity: 0.9;
-  font-size: 1.05rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--text-muted);
+  margin-bottom: 35px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
   line-height: 1.6;
 }
 
-/* Botón principal */
+/* Botón */
 .btn {
   display: inline-block;
-  padding: 14px 28px;
+  padding: 16px 34px;
   background: var(--primary);
   color: white;
   text-decoration: none;
   border-radius: 50px;
-  font-weight: bold;
-  transition: 0.3s;
+  font-weight: 600;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
-  box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
+  transition: var(--transition);
+  box-shadow: 0 10px 25px rgba(225, 6, 0, 0.25);
 }
 
 .btn:hover {
-  background: #121010;
   transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 15px 30px rgba(225, 6, 0, 0.35);
+  background: #c00500;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: none;
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
 }
 
 /* ========== SECCIONES ========== */
-section {
-  padding: 70px 6%;
+.section {
+  padding: 90px 6%;
+}
+
+.section-alt {
+  background: #f1f5f9;
 }
 
 .section-title {
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 1.9rem;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  margin-bottom: 50px;
+  font-weight: 750;
 }
 
-.grid {
+/* ========== BENTO GRID ========== */
+.bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.card {
-  position: relative;
-  background: #ffffff;
-  padding: 28px 22px;
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  overflow: hidden;
-  cursor: pointer;
+.bento-card {
+  background: var(--clay-bg);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: 
+    8px 8px 20px var(--clay-shadow-dark),
+    -6px -6px 16px var(--clay-shadow-light);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
 }
 
-.icon {
-  font-size: 32px;
-  margin-bottom: 15px;
-  transition: transform 0.3s ease;
+.bento-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 
+    12px 12px 28px var(--clay-shadow-dark),
+    -8px -8px 20px var(--clay-shadow-light);
 }
 
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+.bento-large {
+  grid-column: span 2;
+  grid-row: span 2;
 }
 
-.card:active {
-  transform: scale(0.97);
+.bento-wide {
+  grid-column: span 2;
 }
 
-.card:hover .icon {
-  transform: scale(1.2) rotate(5deg);
+.bento-card .icon {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  height: 4px;
-  background: linear-gradient(90deg, #ff4d4d, #ff0000);
-  transition: width 0.4s ease;
+.bento-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
 }
 
-.card:hover::before {
+.bento-card p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Paquetes */
+.packages {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.packages .bento-card {
+  text-align: center;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 12px 0 20px;
+}
+
+.bento-card ul {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 25px;
   width: 100%;
 }
 
-.card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
-  );
-  transform: skewX(-25deg);
-}
-
-.card:hover::after {
-  animation: shine 0.9s forwards;
-}
-
-@keyframes shine {
-  100% {
-    left: 125%;
-  }
-}
-
-.card h3 {
-  margin-bottom: 10px;
-  font-size: 1.15rem;
-  color: #111;
-}
-
-.card p {
+.bento-card ul li {
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  color: var(--text-muted);
   font-size: 0.95rem;
-  color: #555;
-  line-height: 1.6;
+}
+
+.bento-card ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.bento-popular {
+  background: linear-gradient(145deg, #fff5f5, #fff);
+  border: 2px solid var(--primary);
+  position: relative;
+  transform: scale(1.03);
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 50px;
+}
+
+/* Beneficios */
+.benefits {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* ========== CTA ========== */
@@ -288,162 +336,165 @@ section {
   background: var(--primary);
   color: white;
   text-align: center;
-  padding: 70px 6%;
+  padding: 90px 6%;
 }
 
+.cta h2 {
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  margin-bottom: 30px;
+  line-height: 1.3;
+}
+
+.cta .btn {
+  background: white;
+  color: var(--primary);
+}
+
+.cta .btn:hover {
+  background: #f8f8f8;
+}
+
+/* ========== FORMULARIO ========== */
 form {
   max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
-input,
-textarea {
-  padding: 13px 14px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+input, textarea {
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: none;
   font-size: 1rem;
-  width: 100%;
+  background: white;
+  box-shadow: 
+    inset 3px 3px 8px #d1d9e6,
+    inset -3px -3px 8px #ffffff;
+  transition: var(--transition);
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 
+    inset 4px 4px 10px #c5d0de,
+    inset -4px -4px 10px #ffffff,
+    0 0 0 3px rgba(225, 6, 0, 0.12);
 }
 
 textarea {
+  min-height: 130px;
   resize: vertical;
-  min-height: 120px;
-}
-
-/* ========== FOOTER ========== */
-footer {
-  background: #111;
-  color: white;
-  text-align: center;
-  padding: 20px 6%;
-  font-size: 0.85rem;
-}
-
-/* ========== WHATSAPP ========== */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(37, 211, 102, 0.85);
-  color: white;
-  padding: 14px 18px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.95rem;
-  z-index: 999;
-
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
-  border: 2px solid rgba(255, 255, 255, 0.18);
-
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.whatsapp-float.hide {
-  transform: translateY(90px);
-}
-
-.whatsapp-float:hover {
-  transform: scale(1.05);
-  background: rgba(37, 211, 102, 0.95);
-  box-shadow: 0px 0px 40px rgba(227, 228, 237, 0.5);
-}
-
-.whatsapp-float.hide:hover {
-  transform: translateY(90px) scale(1.05);
 }
 
 /* ========== MAPA ========== */
 .map-responsive {
   position: relative;
-  width: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding-bottom: 45%;
-  border-radius: 16px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
 }
 
 .map-responsive iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+/* ========== FOOTER ========== */
+footer {
+  text-align: center;
+  padding: 30px 6%;
+  font-size: 0.9rem;
+  color: #666;
+  background: #f1f5f9;
 }
 
-/* ========== BANNER COOKIES ========== */
+/* ========== WHATSAPP ========== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #25d366;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 999;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+  transition: var(--transition);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.06);
+}
+
+.whatsapp-float.hide {
+  transform: translateY(100px);
+}
+
+/* ========== COOKIES ========== */
 .banner-cookies {
   position: fixed;
-  bottom: 20px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  width: 92%;
-  max-width: 420px;
-  padding: 16px;
-  background-color: rgba(255, 255, 255, 0.97);
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: white;
+  padding: 18px 24px;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 12px;
   text-align: center;
-  font-size: 0.9rem;
+  max-width: 400px;
+  width: 92%;
 }
 
 .banner-cookies button {
-  margin-top: 12px;
-  background: #0078ff;
-  color: #fff;
+  background: var(--primary);
+  color: white;
   border: none;
-  padding: 9px 16px;
-  border-radius: 6px;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
-  font-size: 0.9rem;
-}
-
-.banner-cookies button:hover {
-  background: #005fcc;
 }
 
 /* ============================================
-   MEDIA QUERIES - RESPONSIVE + HAMBURGUESA
+   RESPONSIVE
    ============================================ */
 
-@media (max-width: 800px) {
-  .hero {
-    padding: 80px;
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  .hero h2 {
-    font-size: 2.1rem;
+  
+  .bento-large {
+    grid-column: span 2;
+    grid-row: span 1;
   }
-
-  section {
-    padding: 60px 5%;
+  
+  .packages {
+    grid-template-columns: 1fr;
   }
-
-  .section-title {
-    font-size: 1.75rem;
+  
+  .bento-popular {
+    transform: none;
   }
 }
 
-/* Tablets y móviles - Menú hamburguesa */
+/* ========== MENÚ MÓVIL CON SLIDE + CROSSFADE ========== */
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
@@ -452,149 +503,94 @@ ul {
   nav {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 280px;
     height: 100vh;
-    background: rgba(17, 17, 17, 0.97);
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 80px 30px 40px;
-    gap: 20px;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
+    padding: 100px 30px 40px;
+    gap: 15px;
+    
+    /* Estado inicial: escondido */
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    
+    transition: 
+      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s ease,
+      visibility 0.4s;
+      
+    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.12);
+    z-index: 1001;
   }
 
+  /* Menú abierto */
   nav.active {
-    right: 0;
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
   }
 
   nav a {
     width: 100%;
     text-align: left;
-    padding: 12px 18px;
-    font-size: 1rem;
+    padding: 14px 18px;
+    font-size: 1.05rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
   }
 
-  .hero {
-    text-align: justify;
-    width: 100px;
-    margin-top: 80px;
-    padding: 70px 5%;
+  /* Links con entrada escalonada */
+  nav.active a {
+    opacity: 1;
+    transform: translateX(0);
   }
 
-  .hero h2 {
-    font-size: 1.9rem;
+  nav.active a:nth-child(1) { transition-delay: 0.10s; }
+  nav.active a:nth-child(2) { transition-delay: 0.15s; }
+  nav.active a:nth-child(3) { transition-delay: 0.20s; }
+  nav.active a:nth-child(4) { transition-delay: 0.25s; }
+  nav.active a:nth-child(5) { transition-delay: 0.30s; }
+
+  .header-container {
+    border-radius: 20px;
+    padding: 12px 20px;
   }
 
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .grid {
+  .benefits {
     grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .card {
-    padding: 24px 20px;
-  }
-
-  .map-responsive {
-    padding-bottom: 60%;
-  }
-
-  .cta {
-    padding: 60px 5%;
-  }
-
-  .whatsapp-float {
-    bottom: 16px;
-    right: 16px;
-    padding: 12px 16px;
-    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  header {
-    padding: 12px 4%;
+  .bento-grid {
+    grid-template-columns: 1fr;
   }
-
-  header h1 {
-    font-size: 1.05rem;
+  
+  .bento-large,
+  .bento-wide {
+    grid-column: span 1;
   }
-
-  nav {
-    width: 100%;
-  }
-
+  
   .hero {
-    margin-top: 70px;
-    padding: 60px 4%;
-  }
-
-  .hero h2 {
-    font-size: 1.65rem;
-  }
-
-  .hero p {
-    font-size: 0.95rem;
-    margin-bottom: 25px;
-  }
-
-  .btn {
-    padding: 12px 24px;
-    font-size: 0.95rem;
-  }
-
-  section {
-    padding: 50px 4%;
-  }
-
-  .section-title {
-    font-size: 1.55rem;
-    margin-bottom: 30px;
-  }
-
-  .card h3 {
-    font-size: 1.1rem;
-  }
-
-  .card p {
-    font-size: 0.9rem;
-  }
-
-  .map-responsive {
-    padding-bottom: 70%;
-    border-radius: 12px;
-  }
-
-  .banner-cookies {
-    width: 94%;
-    bottom: 12px;
-    padding: 14px;
-    font-size: 0.85rem;
+    padding: 120px 5% 60px;
   }
 
   .whatsapp-float {
-    bottom: 12px;
-    right: 12px;
-    padding: 11px 14px;
-    font-size: 0.85rem;
+    bottom: 18px;
+    right: 18px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
   }
 
-  footer {
-    padding: 18px 4%;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .hero h2 {
-    font-size: 1.45rem;
+  .banner-cookies {
+    bottom: 16px;
+    padding: 16px;
   }
 }
