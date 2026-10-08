@@ -6,10 +6,15 @@
     <title>Páginas Web para Negocios Locales</title>
     <meta name="description" content="Creamos páginas web para negocios locales en Colombia. Más clientes y más ventas." />
     <link rel="stylesheet" href="styles.css" />
+    <!-- Three.js para el fondo 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   </head>
 
   <body>
-    <!-- HEADER MINIMALISTA -->
+    <!-- Fondo 3D -->
+    <div id="bg-3d"></div>
+
+    <!-- HEADER FLOTANTE -->
     <header class="header">
       <div class="header-container">
         <h1 class="logo">TuWebLocal</h1>
@@ -32,39 +37,42 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-content">
-        <h2>Si tu negocio no está en internet, estás perdiendo clientes</h2>
+        <h2>Si tu negocio no está en internet, <span>estás perdiendo clientes</span></h2>
         <p>Diseñamos páginas web que generan confianza, visibilidad en Google y más ventas reales.</p>
-        <a href="#contacto" class="btn">Quiero Más Clientes</a>
+        <div class="hero-buttons">
+          <a href="#contacto" class="btn">Quiero Más Clientes</a>
+          <a href="#paquetes" class="btn btn-outline">Ver Paquetes</a>
+        </div>
       </div>
     </section>
 
-    <!-- SERVICIOS - BENTO GRID -->
+    <!-- SERVICIOS -->
     <section id="servicios" class="section">
       <h2 class="section-title">Lo que hacemos por tu negocio</h2>
       
-      <div class="bento-grid">
-        <div class="bento-card bento-large">
+      <div class="grid">
+        <div class="card">
           <div class="icon">🚀</div>
           <h3>Diseño Profesional</h3>
           <p>Imagen moderna, rápida y optimizada para celular. Tu negocio se verá serio y confiable.</p>
         </div>
 
-        <div class="bento-card">
+        <div class="card">
           <div class="icon">📈</div>
           <h3>SEO Local</h3>
-          <p>Aparece cuando te buscan en Google.</p>
+          <p>Te ayudamos a aparecer cuando busquen tus servicios en Google.</p>
         </div>
 
-        <div class="bento-card">
+        <div class="card">
           <div class="icon">💬</div>
-          <h3>WhatsApp</h3>
-          <p>Clientes escribiéndote directo.</p>
+          <h3>Integración WhatsApp</h3>
+          <p>Clientes escribiéndote directo desde tu página web.</p>
         </div>
 
-        <div class="bento-card bento-wide">
+        <div class="card">
           <div class="icon">🔒</div>
           <h3>Velocidad y Seguridad</h3>
-          <p>Páginas rápidas, seguras y listas para convertir visitas en clientes reales.</p>
+          <p>Páginas rápidas, seguras y listas para convertir visitas en clientes.</p>
         </div>
       </div>
     </section>
@@ -73,8 +81,8 @@
     <section id="paquetes" class="section section-alt">
       <h2 class="section-title">Paquetes de Landing Pages</h2>
       
-      <div class="bento-grid packages">
-        <div class="bento-card">
+      <div class="grid packages">
+        <div class="card">
           <h3>✨ Básico</h3>
           <div class="price">$350.000</div>
           <ul>
@@ -87,7 +95,7 @@
           <a href="#contacto" class="btn btn-outline">Elegir</a>
         </div>
 
-        <div class="bento-card bento-popular">
+        <div class="card card-popular">
           <div class="badge">Más Popular</div>
           <h3>🚀 Intermedio</h3>
           <div class="price">$400.000</div>
@@ -101,7 +109,7 @@
           <a href="#contacto" class="btn">Elegir</a>
         </div>
 
-        <div class="bento-card">
+        <div class="card">
           <h3>🌌 Premium</h3>
           <div class="price">$500.000</div>
           <ul>
@@ -120,18 +128,18 @@
     <section id="beneficios" class="section">
       <h2 class="section-title">¿Por qué necesitas una web?</h2>
       
-      <div class="bento-grid benefits">
-        <div class="bento-card">
+      <div class="grid">
+        <div class="card">
           <h3>Más Credibilidad</h3>
-          <p>Tu negocio se ve serio y profesional.</p>
+          <p>Tu negocio se ve serio y profesional frente a la competencia.</p>
         </div>
-        <div class="bento-card">
+        <div class="card">
           <h3>Más Clientes</h3>
-          <p>Las personas que buscan en Google te encuentran.</p>
+          <p>Las personas que buscan en Google te encuentran fácilmente.</p>
         </div>
-        <div class="bento-card">
+        <div class="card">
           <h3>Disponible 24/7</h3>
-          <p>Tu negocio vendiendo incluso cuando duermes.</p>
+          <p>Tu negocio sigue vendiendo incluso cuando estás dormido.</p>
         </div>
       </div>
     </section>
@@ -170,10 +178,8 @@
       © 2026 Páginas Web para Negocios Locales
     </footer>
 
-    <!-- WhatsApp -->
     <a class="whatsapp-float" href="https://wa.me/573219827871" target="_blank">WhatsApp</a>
 
-    <!-- Cookies -->
     <div id="banner-cookies" class="banner-cookies">
       <p>Usamos cookies para mejorar tu experiencia.</p>
       <button id="accept-cookies">Aceptar</button>
