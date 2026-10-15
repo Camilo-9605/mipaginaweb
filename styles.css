@@ -135,7 +135,7 @@ nav a:hover {
   transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* ========== HERO CON IMÁGENES ========== */
+/* ========== HERO ========== */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -280,39 +280,110 @@ nav a:hover {
   margin: 0 auto;
 }
 
-.card {
+/* Estilos base de tarjetas */
+.card,
+.card1,
+.card2,
+.card3,
+.card4 {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
   padding: 30px 26px;
   transition: var(--transition);
   position: relative;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
 }
 
-.card:hover {
+.card:hover,
+.card1:hover,
+.card2:hover,
+.card3:hover,
+.card4:hover {
   transform: translateY(-6px);
   border-color: rgba(225, 6, 0, 0.4);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-.card .icon {
+/* Iconos */
+.card .icon,
+.card1 .icon,
+.card2 .icon,
+.card3 .icon,
+.card4 .icon {
   font-size: 2.1rem;
   margin-bottom: 16px;
 }
 
-.card h3 {
+/* Títulos y párrafos */
+.card h3,
+.card1 h3,
+.card2 h3,
+.card3 h3,
+.card4 h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: white;
 }
 
-.card p {
+.card p,
+.card1 p,
+.card2 p,
+.card3 p,
+.card4 p {
   color: var(--text-muted);
   line-height: 1.6;
   font-size: 0.95rem;
+  margin: 0;
 }
 
-/* Paquetes */
+/* ========== CONTENIDO EXTRA (desplegable) ========== */
+.extra-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, margin 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  text-align: left;
+}
+
+.extra-content.open {
+  max-height: 280px;
+  margin-top: 18px;
+  opacity: 1;
+}
+
+.extra-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.extra-content li {
+  padding: 6px 0 6px 22px;
+  position: relative;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.extra-content li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Colores superiores */
+.card1 { border-top: 3px solid #6366f1; }
+.card2 { border-top: 3px solid #10b981; }
+.card3 { border-top: 3px solid #3b82f6; }
+.card4 { border-top: 3px solid #f59e0b; }
+
+/* ========== PAQUETES ========== */
 .packages {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -322,6 +393,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: default;
 }
 
 .price {

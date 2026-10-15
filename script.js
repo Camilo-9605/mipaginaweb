@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Partículas
     const particlesCount = window.innerWidth < 768 ? 200 : 400;
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
@@ -185,5 +184,46 @@ document.addEventListener("DOMContentLoaded", () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
   })();
+
+   // ==============================
+  // 7. TARJETAS CLICKEABLES (versión corregida)
+  // ==============================
+  const servicesGrid = document.querySelector("#servicios .grid");
+
+  if (servicesGrid) {
+    servicesGrid.addEventListener("click", (e) => {
+      const card = e.target.closest(".card1, .card2, .card3, .card4");
+      
+      // Si no se hizo clic dentro de una tarjeta de servicio, no hacemos nada
+      if (!card) return;
+
+      e.stopPropagation(); // Muy importante
+
+      const extra = card.querySelector(".extra-content");
+      if (!extra) return;
+
+      const isOpen = extra.classList.contains("open");
+
+      // Cerrar todas las tarjetas
+      document.querySelectorAll("#servicios .extra-content.open").forEach(el => {
+        el.classList.remove("open");
+      });
+
+      // Si la tarjeta estaba cerrada, la abrimos
+      if (!isOpen) {
+        extra.classList.add("open");
+      }
+    });
+  }
+
+  // Cerrar al hacer clic fuera de las tarjetas de servicios
+  document.addEventListener("click", (e) => {
+    // Solo cerrar si el clic NO fue dentro de una tarjeta de servicio
+    if (!e.target.closest("#servicios .card1, #servicios .card2, #servicios .card3, #servicios .card4")) {
+      document.querySelectorAll("#servicios .extra-content.open").forEach(el => {
+        el.classList.remove("open");
+      });
+    }
+  });
 
 });
