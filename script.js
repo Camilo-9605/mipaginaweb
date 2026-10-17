@@ -1,6 +1,146 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==============================
+  // 0. GALAXIA 3D (Three.js) - galaxySpin
+  // ==============================
+  const canvas = document.getElementById("galaxy-canvas");
+
+  if (canvas && typeof THREE !== "undefined") {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 6;
+    camera.position.y = 1.5;
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+      alpha: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 1);
+
+    // Parámetros de la galaxia
+    const parameters = {
+      count: 18000,
+      size: 0.025,
+      radius: 8,
+      branches: 4,
+      spin: 1.4,
+      randomness: 0.35,
+      randomnessPower: 2.8,
+      insideColor: "#ff3b3b",   // rojo suave (coincide con la marca)
+      outsideColor: "#1b3984"  // azul oscuro espacial
+    };
+
+    // Generar galaxia
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(parameters.count * 3);
+    const colors = new Float32Array(parameters.count * 3);
+
+    const colorInside = new THREE.Color(parameters.insideColor);
+    const colorOutside = new THREE.Color(parameters.outsideColor);
+
+    for (let i = 0; i < parameters.count; i++) {
+      const i3 = i * 3;
+
+      // Radio con distribución más densa en el centro
+      const radius = Math.pow(Math.random(), parameters.randomnessPower) * parameters.radius;
+
+      // Ángulo de la rama
+      const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
+
+      // Ángulo de giro (más lejos = más girado)
+      const spinAngle = radius * parameters.spin;
+
+      // Aleatoriedad (grosor de los brazos)
+      const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+      const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius * 0.4;
+      const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
+
+      positions[i3]     = Math.cos(branchAngle + spinAngle) * radius + randomX;
+      positions[i3 + 1] = randomY;
+      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+      // Color degradado del centro al exterior
+      const mixedColor = colorInside.clone();
+      mixedColor.lerp(colorOutside, radius / parameters.radius);
+
+      colors[i3]     = mixedColor.r;
+      colors[i3 + 1] = mixedColor.g;
+      colors[i3 + 2] = mixedColor.b;
+    }
+
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: parameters.size,
+      sizeAttenuation: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.9
+    });
+
+    const galaxy = new THREE.Points(geometry, material);
+    // Inclinamos un poco la galaxia para que se vea más 3D
+    galaxy.rotation.x = -0.4;
+    scene.add(galaxy);
+
+    // Estrellas de fondo (más lejanas y sutiles)
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 2500;
+    const starsPositions = new Float32Array(starsCount * 3);
+
+    for (let i = 0; i < starsCount * 3; i++) {
+      starsPositions[i] = (Math.random() - 0.5) * 80;
+    }
+
+    starsGeometry.setAttribute("position", new THREE.BufferAttribute(starsPositions, 3));
+
+    const starsMaterial = new THREE.PointsMaterial({
+      size: 0.04,
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.6,
+      sizeAttenuation: true,
+      depthWrite: false
+    });
+
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    // Animación
+    const clock = new THREE.Clock();
+
+    function animateGalaxy() {
+      const elapsed = clock.getElapsedTime();
+
+      // Rotación suave de la galaxia
+      galaxy.rotation.y = elapsed * 0.08;
+
+      // Rotación muy lenta de las estrellas de fondo
+      stars.rotation.y = elapsed * 0.015;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animateGalaxy);
+    }
+
+    animateGalaxy();
+
+    // Resize
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+  }
+
+  // ==============================
   // 1. MENÚ HAMBURGUESA
   // ==============================
   const hamburger = document.querySelector(".hamburger");
@@ -75,8 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================
-  // 5. HERO - CAMBIO DE IMÁGENES
+  // 5. HERO - CAMBIO DE IMÁGENES (desactivado porque ahora usamos la galaxia)
   // ==============================
+  // Se mantiene el código por si quieres volver a activarlo más adelante.
+  /*
   const images = [
     "images_optimizadas/ima1.jpg",
     "images_optimizadas/ima2.jpg",
@@ -107,86 +249,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(changeBackground, 4500);
   }
+  */
 
   // ==============================
-  // 6. FONDO 3D ANIMADO
-  // ==============================
-  (function init3DBackground() {
-    const container = document.getElementById("bg-3d");
-    if (!container || typeof THREE === "undefined") return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 30;
-
-    const renderer = new THREE.WebGLRenderer({ 
-      alpha: true, 
-      antialias: true 
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    const particlesCount = window.innerWidth < 768 ? 200 : 400;
-    const positions = new Float32Array(particlesCount * 3);
-    const colors = new Float32Array(particlesCount * 3);
-
-    for (let i = 0; i < particlesCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 80;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 80;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 80;
-
-      const isRed = Math.random() > 0.7;
-      colors[i * 3] = isRed ? 0.88 : 1;
-      colors[i * 3 + 1] = isRed ? 0.02 : 1;
-      colors[i * 3 + 2] = isRed ? 0.02 : 1;
-    }
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-    const material = new THREE.PointsMaterial({
-      size: 0.15,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.7,
-      sizeAttenuation: true
-    });
-
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    document.addEventListener("mousemove", (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      particles.rotation.y += 0.0008;
-      particles.rotation.x += 0.0003;
-      particles.rotation.y += mouseX * 0.0003;
-      particles.rotation.x += mouseY * 0.0003;
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    window.addEventListener("resize", () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  })();
-
-   // ==============================
-  // 7. TARJETAS CLICKEABLES (versión corregida)
+  // 6. TARJETAS CLICKEABLES
   // ==============================
   const servicesGrid = document.querySelector("#servicios .grid");
 
@@ -194,31 +260,26 @@ document.addEventListener("DOMContentLoaded", () => {
     servicesGrid.addEventListener("click", (e) => {
       const card = e.target.closest(".card1, .card2, .card3, .card4");
       
-      // Si no se hizo clic dentro de una tarjeta de servicio, no hacemos nada
       if (!card) return;
 
-      e.stopPropagation(); // Muy importante
+      e.stopPropagation();
 
       const extra = card.querySelector(".extra-content");
       if (!extra) return;
 
       const isOpen = extra.classList.contains("open");
 
-      // Cerrar todas las tarjetas
       document.querySelectorAll("#servicios .extra-content.open").forEach(el => {
         el.classList.remove("open");
       });
 
-      // Si la tarjeta estaba cerrada, la abrimos
       if (!isOpen) {
         extra.classList.add("open");
       }
     });
   }
 
-  // Cerrar al hacer clic fuera de las tarjetas de servicios
   document.addEventListener("click", (e) => {
-    // Solo cerrar si el clic NO fue dentro de una tarjeta de servicio
     if (!e.target.closest("#servicios .card1, #servicios .card2, #servicios .card3, #servicios .card4")) {
       document.querySelectorAll("#servicios .extra-content.open").forEach(el => {
         el.classList.remove("open");

@@ -6,13 +6,12 @@
     <title>Páginas Web para Negocios Locales</title>
     <meta name="description" content="Creamos páginas web para negocios locales en Colombia. Más clientes y más ventas." />
     <link rel="stylesheet" href="styles.css" />
-    <!-- Three.js para el fondo 3D -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   </head>
 
   <body>
-    <!-- Fondo 3D -->
-    <div id="bg-3d"></div>
+
+    <!-- CANVAS GALAXIA 3D (fondo) -->
+    <canvas id="galaxy-canvas"></canvas>
 
     <!-- HEADER FLOTANTE -->
     <header class="header">
@@ -51,12 +50,10 @@
       <h2 class="section-title">Lo que hacemos por tu negocio</h2>
       
       <div class="grid">
-        <!-- Tarjeta 1 -->
         <div class="card card1">
           <div class="icon">🚀</div>
           <h3>Diseño Profesional</h3>
           <p>Imagen moderna, rápida y optimizada para celular. Tu negocio se verá serio y confiable.</p>
-          
           <div class="extra-content">
             <ul>
               <li>Diseño 100% responsive (se ve perfecto en celular)</li>
@@ -67,12 +64,10 @@
           </div>
         </div>
 
-        <!-- Tarjeta 2 -->
         <div class="card card2">
           <div class="icon">📈</div>
           <h3>SEO Local</h3>
           <p>Te ayudamos a aparecer cuando busquen tus servicios en Google.</p>
-          
           <div class="extra-content">
             <ul>
               <li>Optimización para búsquedas locales (“cerca de mí”)</li>
@@ -83,12 +78,10 @@
           </div>
         </div>
 
-        <!-- Tarjeta 3 -->
         <div class="card card3">
           <div class="icon">💬</div>
           <h3>Integración WhatsApp</h3>
           <p>Clientes escribiéndote directo desde tu página web.</p>
-          
           <div class="extra-content">
             <ul>
               <li>Botón flotante de WhatsApp siempre visible</li>
@@ -99,12 +92,10 @@
           </div>
         </div>
 
-        <!-- Tarjeta 4 -->
         <div class="card card4">
           <div class="icon">🔒</div>
           <h3>Velocidad y Seguridad</h3>
           <p>Páginas rápidas, seguras y listas para convertir visitas en clientes.</p>
-          
           <div class="extra-content">
             <ul>
               <li>Certificado SSL (candado verde) incluido</li>
@@ -120,7 +111,6 @@
     <!-- PAQUETES -->
     <section id="paquetes" class="section section-alt">
       <h2 class="section-title">Paquetes de Landing Pages</h2>
-      
       <div class="grid packages">
         <div class="card">
           <h3>✨ Básico</h3>
@@ -167,7 +157,6 @@
     <!-- BENEFICIOS -->
     <section id="beneficios" class="section">
       <h2 class="section-title">¿Por qué necesitas una web?</h2>
-      
       <div class="grid">
         <div class="card">
           <h3>Más Credibilidad</h3>
@@ -186,8 +175,10 @@
 
     <!-- CTA -->
     <section class="cta">
-      <h2>No necesitas algo complicado.<br>Necesitas algo que venda.</h2>
-      <a href="#contacto" class="btn">Solicitar Cotización Ahora</a>
+      <div class="cta-content">
+        <h2>No necesitas algo complicado.<br>Necesitas algo que venda.</h2>
+        <a href="#contacto" class="btn">Solicitar Cotización Ahora</a>
+      </div>
     </section>
 
     <!-- UBICACIÓN -->
@@ -225,6 +216,8 @@
       <button id="accept-cookies">Aceptar</button>
     </div>
 
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

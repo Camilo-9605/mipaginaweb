@@ -24,22 +24,23 @@ body {
   opacity: 0;
   animation: aparecer 1s ease forwards;
   overflow-x: hidden;
+  position: relative;
 }
 
 @keyframes aparecer {
   to { opacity: 1; }
 }
 
-/* ========== FONDO 3D ========== */
-#bg-3d {
+/* ========== GALAXIA 3D (fondo) ========== */
+#galaxy-canvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
-  background: #0a0a0a;
+  background: #000;
 }
 
 /* ========== HEADER FLOTANTE ========== */
@@ -103,7 +104,6 @@ nav a:hover {
   background: rgba(225, 6, 0, 0.15);
 }
 
-/* Hamburguesa */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -146,40 +146,13 @@ nav a:hover {
   position: relative;
   overflow: hidden;
   background-color: transparent;
+  z-index: 1;
 }
 
+/* Quitamos las imágenes de fondo del hero para que se vea la galaxia */
 .hero::before,
 .hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: opacity 1.3s ease-in-out;
-  z-index: 0;
-}
-
-.hero::before {
-  background-image: 
-    linear-gradient(to right, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0.72)),
-    var(--bg-before, url("images_optimizadas/ima1.jpg"));
-  opacity: 1;
-}
-
-.hero::after {
-  background-image: 
-    linear-gradient(to right, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0.72)),
-    var(--bg-after, url("images_optimizadas/ima2.jpg"));
-  opacity: 0;
-}
-
-.hero.fade::before {
-  opacity: 0;
-}
-
-.hero.fade::after {
-  opacity: 1;
+  display: none;
 }
 
 .hero-content {
@@ -194,6 +167,7 @@ nav a:hover {
   margin-bottom: 20px;
   font-weight: 800;
   color: white;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
 .hero h2 span {
@@ -208,6 +182,7 @@ nav a:hover {
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
 }
 
 .hero-buttons {
@@ -217,7 +192,6 @@ nav a:hover {
   flex-wrap: wrap;
 }
 
-/* Botones */
 .btn {
   display: inline-block;
   padding: 15px 32px;
@@ -257,10 +231,13 @@ nav a:hover {
   padding: 90px 6%;
   position: relative;
   z-index: 1;
+  background: transparent;
 }
 
 .section-alt {
-  background: rgba(15, 15, 15, 0.92);
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .section-title {
@@ -269,6 +246,7 @@ nav a:hover {
   margin-bottom: 50px;
   font-weight: 750;
   color: white;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* ========== GRID + CARDS ========== */
@@ -280,13 +258,14 @@ nav a:hover {
   margin: 0 auto;
 }
 
-/* Estilos base de tarjetas */
 .card,
 .card1,
 .card2,
 .card3,
 .card4 {
-  background: var(--card-bg);
+  background: rgba(22, 22, 22, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
   padding: 30px 26px;
@@ -308,7 +287,6 @@ nav a:hover {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Iconos */
 .card .icon,
 .card1 .icon,
 .card2 .icon,
@@ -318,7 +296,6 @@ nav a:hover {
   margin-bottom: 16px;
 }
 
-/* Títulos y párrafos */
 .card h3,
 .card1 h3,
 .card2 h3,
@@ -340,7 +317,6 @@ nav a:hover {
   margin: 0;
 }
 
-/* ========== CONTENIDO EXTRA (desplegable) ========== */
 .extra-content {
   max-height: 0;
   overflow: hidden;
@@ -377,7 +353,6 @@ nav a:hover {
   font-weight: bold;
 }
 
-/* Colores superiores */
 .card1 { border-top: 3px solid #6366f1; }
 .card2 { border-top: 3px solid #10b981; }
 .card3 { border-top: 3px solid #3b82f6; }
@@ -428,7 +403,7 @@ nav a:hover {
 
 .card-popular {
   border: 2px solid var(--primary);
-  background: linear-gradient(160deg, #1a0a0a, #161616);
+  background: linear-gradient(160deg, rgba(26, 10, 10, 0.9), rgba(22, 22, 22, 0.9));
   transform: scale(1.04);
   z-index: 2;
 }
@@ -448,28 +423,43 @@ nav a:hover {
 
 /* ========== CTA ========== */
 .cta {
-  background: linear-gradient(135deg, #e10600, #b00500);
-  color: white;
-  text-align: center;
-  padding: 90px 6%;
   position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 110px 6%;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(225, 6, 0, 0.92), rgba(176, 5, 0, 0.92));
   z-index: 1;
 }
 
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
 .cta h2 {
-  font-size: clamp(1.6rem, 4vw, 2.3rem);
-  margin-bottom: 30px;
+  font-size: clamp(1.7rem, 4.2vw, 2.5rem);
+  margin-bottom: 32px;
   line-height: 1.3;
+  color: white;
+  font-weight: 700;
 }
 
 .cta .btn {
   background: white;
   color: var(--primary);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  font-weight: 700;
 }
 
 .cta .btn:hover {
   background: #f5f5f5;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
 }
 
 /* ========== FORMULARIO ========== */
@@ -486,7 +476,7 @@ input, textarea {
   border-radius: 14px;
   border: 1px solid #2a2a2a;
   font-size: 1rem;
-  background: #141414;
+  background: rgba(20, 20, 20, 0.85);
   color: white;
   transition: var(--transition);
 }
@@ -533,7 +523,7 @@ footer {
   padding: 30px 6%;
   font-size: 0.9rem;
   color: #777;
-  background: #0a0a0a;
+  background: rgba(10, 10, 10, 0.9);
   border-top: 1px solid #1a1a1a;
   position: relative;
   z-index: 1;
@@ -600,15 +590,11 @@ footer {
   cursor: pointer;
 }
 
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
+/* ========== RESPONSIVE ========== */
 @media (max-width: 900px) {
   .packages {
     grid-template-columns: 1fr 1fr;
   }
-
   .card-popular {
     transform: none;
   }
@@ -632,16 +618,13 @@ footer {
     align-items: flex-start;
     padding: 100px 28px 40px;
     gap: 12px;
-    
     transform: translateX(100%);
     opacity: 0;
     visibility: hidden;
-    
     transition: 
       transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
       opacity 0.4s ease,
       visibility 0.4s;
-      
     box-shadow: -15px 0 40px rgba(0, 0, 0, 0.5);
     z-index: 1001;
   }
@@ -685,6 +668,11 @@ footer {
   .hero {
     padding: 130px 5% 70px;
   }
+
+  .cta {
+    padding: 80px 5%;
+    min-height: 360px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -711,5 +699,9 @@ footer {
   .banner-cookies {
     bottom: 14px;
     padding: 14px 16px;
+  }
+
+  .cta h2 {
+    font-size: 1.55rem;
   }
 }
