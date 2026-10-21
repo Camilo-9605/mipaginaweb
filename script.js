@@ -1,135 +1,189 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==============================
-  // 0. GALAXIA 3D (Three.js) - galaxySpin
+  // 0. SISTEMA DE PARTÍCULAS - NIEVE REALISTA + SCROLL
   // ==============================
   const canvas = document.getElementById("galaxy-canvas");
 
   if (canvas && typeof THREE !== "undefined") {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 6;
-    camera.position.y = 1.5;
-    camera.lookAt(0, 0, 0);
+    scene.background = new THREE.Color(0x000000);
+    scene.fog = new THREE.FogExp2(0x000000, 0.0015);
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 50;
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
       antialias: true,
-      alpha: true
+      alpha: false
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 1);
 
-    // Parámetros de la galaxia
-    const parameters = {
-      count: 18000,
-      size: 0.025,
-      radius: 8,
-      branches: 4,
-      spin: 1.4,
-      randomness: 0.35,
-      randomnessPower: 2.8,
-      insideColor: "#ff3b3b",   // rojo suave (coincide con la marca)
-      outsideColor: "#1b3984"  // azul oscuro espacial
-    };
+    // ========== TEXTURA SUAVE ==========
+    function createSoftSnowflake() {
+      const size = 128;
+      const c = document.createElement("canvas");
+      c.width = c.height = size;
+      const ctx = c.getContext("2d");
 
-    // Generar galaxia
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(parameters.count * 3);
-    const colors = new Float32Array(parameters.count * 3);
+      const gradient = ctx.createRadialGradient(
+        size / 2, size / 2, 0,
+        size / 2, size / 2, size / 2
+      );
+      gradient.addColorStop(0.0, "rgba(255, 255, 255, 1)");
+      gradient.addColorStop(0.12, "rgba(255, 255, 255, 0.85)");
+      gradient.addColorStop(0.35, "rgba(255, 255, 255, 0.35)");
+      gradient.addColorStop(0.65, "rgba(255, 255, 255, 0.08)");
+      gradient.addColorStop(1.0, "rgba(255, 255, 255, 0)");
 
-    const colorInside = new THREE.Color(parameters.insideColor);
-    const colorOutside = new THREE.Color(parameters.outsideColor);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
 
-    for (let i = 0; i < parameters.count; i++) {
-      const i3 = i * 3;
-
-      // Radio con distribución más densa en el centro
-      const radius = Math.pow(Math.random(), parameters.randomnessPower) * parameters.radius;
-
-      // Ángulo de la rama
-      const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
-
-      // Ángulo de giro (más lejos = más girado)
-      const spinAngle = radius * parameters.spin;
-
-      // Aleatoriedad (grosor de los brazos)
-      const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-      const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius * 0.4;
-      const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
-
-      positions[i3]     = Math.cos(branchAngle + spinAngle) * radius + randomX;
-      positions[i3 + 1] = randomY;
-      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
-
-      // Color degradado del centro al exterior
-      const mixedColor = colorInside.clone();
-      mixedColor.lerp(colorOutside, radius / parameters.radius);
-
-      colors[i3]     = mixedColor.r;
-      colors[i3 + 1] = mixedColor.g;
-      colors[i3 + 2] = mixedColor.b;
+      const texture = new THREE.CanvasTexture(c);
+      texture.generateMipmaps = true;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      return texture;
     }
 
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const snowTexture = createSoftSnowflake();
 
-    const material = new THREE.PointsMaterial({
-      size: parameters.size,
-      sizeAttenuation: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.9
-    });
+    // ========== FUNCIÓN PARA CREAR CAPAS ==========
+    function createSnowLayer(count, size, opacity, speedMultiplier, color) {
+      const positions = new Float32Array(count * 3);
+      const velocities = new Float32Array(count * 3);
+      const data = [];
 
-    const galaxy = new THREE.Points(geometry, material);
-    // Inclinamos un poco la galaxia para que se vea más 3D
-    galaxy.rotation.x = -0.4;
-    scene.add(galaxy);
+      for (let i = 0; i < count; i++) {
+        const i3 = i * 3;
 
-    // Estrellas de fondo (más lejanas y sutiles)
-    const starsGeometry = new THREE.BufferGeometry();
-    const starsCount = 2500;
-    const starsPositions = new Float32Array(starsCount * 3);
+        positions[i3]     = (Math.random() - 0.5) * 260;
+        positions[i3 + 1] = Math.random() * 200 - 40;
+        positions[i3 + 2] = (Math.random() - 0.5) * 220;
 
-    for (let i = 0; i < starsCount * 3; i++) {
-      starsPositions[i] = (Math.random() - 0.5) * 80;
+        const fallSpeed = -(Math.random() * 0.22 + 0.08) * speedMultiplier;
+        const windX = (Math.random() - 0.5) * 0.06;
+        const windZ = (Math.random() - 0.5) * 0.05;
+
+        velocities[i3]     = windX;
+        velocities[i3 + 1] = fallSpeed;
+        velocities[i3 + 2] = windZ;
+
+        data.push({
+          phase: Math.random() * Math.PI * 2,
+          sway: 0.3 + Math.random() * 0.7
+        });
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: size,
+        map: snowTexture,
+        transparent: true,
+        opacity: opacity,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        color: color,
+        sizeAttenuation: true,
+        alphaTest: 0.01
+      });
+
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
+
+      return { points, positions, velocities, data, count, baseSpeed: speedMultiplier };
     }
 
-    starsGeometry.setAttribute("position", new THREE.BufferAttribute(starsPositions, 3));
+    // ========== 3 CAPAS DE NIEVE ==========
+    const layerFar  = createSnowLayer(2800, 1.6, 0.28, 0.55, 0xd8e8ff);
+    const layerMid  = createSnowLayer(2200, 2.4, 0.42, 0.85, 0xe4f0ff);
+    const layerNear = createSnowLayer(900,  3.6, 0.58, 1.25, 0xf0f7ff);
 
-    const starsMaterial = new THREE.PointsMaterial({
-      size: 0.04,
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.6,
-      sizeAttenuation: true,
-      depthWrite: false
-    });
+    const layers = [layerFar, layerMid, layerNear];
 
-    const stars = new THREE.Points(starsGeometry, starsMaterial);
-    scene.add(stars);
+    // ========== SCROLL ==========
+    let scrollY = 0;
+    let targetScroll = 0;
 
-    // Animación
+    window.addEventListener("scroll", () => {
+      targetScroll = window.scrollY;
+    }, { passive: true });
+
+    // ========== ANIMACIÓN ==========
     const clock = new THREE.Clock();
+    let time = 0;
 
-    function animateGalaxy() {
-      const elapsed = clock.getElapsedTime();
+    function animate() {
+      requestAnimationFrame(animate);
 
-      // Rotación suave de la galaxia
-      galaxy.rotation.y = elapsed * 0.08;
+      const delta = clock.getDelta();
+      time += delta;
 
-      // Rotación muy lenta de las estrellas de fondo
-      stars.rotation.y = elapsed * 0.015;
+      // Suavizado del scroll (lerp)
+      scrollY += (targetScroll - scrollY) * 0.06;
+
+      // Progreso del scroll (0 a 1 aproximadamente)
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const scrollProgress = Math.min(scrollY / (maxScroll || 1), 1);
+
+      // Velocidad extra de nieve según el scroll
+      const scrollSpeedBoost = 1 + scrollProgress * 0.9;
+
+      // Viento global suave
+      const globalWindX = Math.sin(time * 0.35) * 0.035;
+      const globalWindZ = Math.cos(time * 0.28) * 0.025;
+
+      layers.forEach((layer, index) => {
+        const pos = layer.points.geometry.attributes.position.array;
+
+        // Parallax: las capas se mueven diferente según el scroll
+        const parallaxFactor = (index + 1) * 0.015;
+        layer.points.position.y = -scrollY * parallaxFactor * 0.08;
+
+        for (let i = 0; i < layer.count; i++) {
+          const i3 = i * 3;
+          const d = layer.data[i];
+
+          // Movimiento de caída + viento + boost por scroll
+          pos[i3]     += layer.velocities[i3] + globalWindX;
+          pos[i3 + 1] += layer.velocities[i3 + 1] * scrollSpeedBoost;
+          pos[i3 + 2] += layer.velocities[i3 + 2] + globalWindZ;
+
+          // Balanceo lateral suave
+          pos[i3] += Math.sin(time * 0.8 + d.phase) * 0.012 * d.sway;
+
+          // Reiniciar cuando sale por abajo
+          if (pos[i3 + 1] < -55) {
+            pos[i3]     = (Math.random() - 0.5) * 260;
+            pos[i3 + 1] = 140 + Math.random() * 60;
+            pos[i3 + 2] = (Math.random() - 0.5) * 220;
+          }
+        }
+
+        layer.points.geometry.attributes.position.needsUpdate = true;
+      });
+
+      // Cámara reacciona al scroll
+      const t = time * 0.05;
+      camera.position.x = Math.sin(t) * 5 + scrollProgress * 4;
+      camera.position.y = Math.cos(t * 0.5) * 2.5 + 14 - scrollProgress * 8;
+      camera.position.z = 50 - scrollProgress * 12;
+      camera.lookAt(0, 28 - scrollProgress * 10, 0);
 
       renderer.render(scene, camera);
-      requestAnimationFrame(animateGalaxy);
     }
 
-    animateGalaxy();
+    animate();
 
     // Resize
     window.addEventListener("resize", () => {
@@ -215,44 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================
-  // 5. HERO - CAMBIO DE IMÁGENES (desactivado porque ahora usamos la galaxia)
-  // ==============================
-  // Se mantiene el código por si quieres volver a activarlo más adelante.
-  /*
-  const images = [
-    "images_optimizadas/ima1.jpg",
-    "images_optimizadas/ima2.jpg",
-    "images_optimizadas/ima3.jpg",
-    "images_optimizadas/ima4.jpg"
-  ];
-
-  let currentIndex = 0;
-  const hero = document.querySelector(".hero");
-
-  if (hero) {
-    hero.style.setProperty("--bg-before", `url(${images[0]})`);
-    hero.style.setProperty("--bg-after", `url(${images[1]})`);
-
-    function changeBackground() {
-      const nextIndex = (currentIndex + 1) % images.length;
-
-      if (hero.classList.contains("fade")) {
-        hero.style.setProperty("--bg-before", `url(${images[nextIndex]})`);
-        hero.classList.remove("fade");
-      } else {
-        hero.style.setProperty("--bg-after", `url(${images[nextIndex]})`);
-        hero.classList.add("fade");
-      }
-
-      currentIndex = nextIndex;
-    }
-
-    setInterval(changeBackground, 4500);
-  }
-  */
-
-  // ==============================
-  // 6. TARJETAS CLICKEABLES
+  // 5. TARJETAS CLICKEABLES
   // ==============================
   const servicesGrid = document.querySelector("#servicios .grid");
 

@@ -2,19 +2,19 @@
   --primary: #e10600;
   --primary-soft: #ff3b3b;
   --dark: #0a0a0a;
-  --card-bg: #161616;
-  --card-border: #2a2a2a;
-  --text: #f0f0f0;
-  --text-muted: #a0a0a0;
-  --radius: 20px;
-  --transition: 0.3s ease;
+  --card-bg: rgba(18, 18, 18, 0.72);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text: #f5f5f5;
+  --text-muted: #9a9a9a;
+  --radius: 12px;
+  --transition: 0.25s ease;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 body {
@@ -22,16 +22,18 @@ body {
   background: var(--dark);
   color: var(--text);
   opacity: 0;
-  animation: aparecer 1s ease forwards;
+  animation: aparecer 0.9s ease forwards;
   overflow-x: hidden;
   position: relative;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 @keyframes aparecer {
   to { opacity: 1; }
 }
 
-/* ========== GALAXIA 3D (fondo) ========== */
+/* ========== BLACK HOLE WARP (fondo) ========== */
 #galaxy-canvas {
   position: fixed;
   top: 0;
@@ -40,13 +42,13 @@ body {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  background: #000;
+  background: #000000;
 }
 
-/* ========== HEADER FLOTANTE ========== */
+/* ========== HEADER MINIMAL ========== */
 .header {
   position: fixed;
-  top: 18px;
+  top: 20px;
   left: 0;
   width: 100%;
   z-index: 1000;
@@ -56,60 +58,60 @@ body {
 }
 
 .header-container {
-  width: 94%;
-  max-width: 1100px;
-  background: rgba(20, 20, 20, 0.85);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  width: 92%;
+  max-width: 960px;
+  background: rgba(12, 12, 12, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 100px;
-  padding: 12px 26px;
+  padding: 10px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   pointer-events: auto;
-  transition: all 0.4s ease;
+  transition: var(--transition);
 }
 
 .header.scrolled .header-container {
-  background: rgba(10, 10, 10, 0.95);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  background: rgba(8, 8, 8, 0.88);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .logo {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--text);
 }
 
 nav {
   display: flex;
-  gap: 6px;
+  gap: 2px;
   align-items: center;
 }
 
 nav a {
   text-decoration: none;
   color: var(--text-muted);
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 450;
+  padding: 7px 14px;
   border-radius: 50px;
   transition: var(--transition);
 }
 
 nav a:hover {
   color: white;
-  background: rgba(225, 6, 0, 0.15);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .hamburger {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 26px;
-  height: 18px;
+  width: 22px;
+  height: 16px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -119,55 +121,54 @@ nav a:hover {
 .hamburger span {
   display: block;
   width: 100%;
-  height: 2.5px;
+  height: 1.5px;
   background: white;
-  border-radius: 3px;
+  border-radius: 2px;
   transition: var(--transition);
 }
 
 .hamburger.active span:nth-child(1) {
-  transform: translateY(7.5px) rotate(45deg);
+  transform: translateY(7.25px) rotate(45deg);
 }
 .hamburger.active span:nth-child(2) {
   opacity: 0;
 }
 .hamburger.active span:nth-child(3) {
-  transform: translateY(-7.5px) rotate(-45deg);
+  transform: translateY(-7.25px) rotate(-45deg);
 }
 
-/* ========== HERO ========== */
+/* ========== HERO MINIMAL ========== */
 .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 140px 6% 80px;
+  padding: 140px 6% 100px;
   position: relative;
   overflow: hidden;
-  background-color: transparent;
+  background: transparent;
   z-index: 1;
 }
 
-/* Quitamos las imágenes de fondo del hero para que se vea la galaxia */
 .hero::before,
 .hero::after {
   display: none;
 }
 
 .hero-content {
-  max-width: 850px;
+  max-width: 720px;
   position: relative;
   z-index: 2;
 }
 
 .hero h2 {
-  font-size: clamp(2rem, 5.5vw, 3.4rem);
-  line-height: 1.15;
-  margin-bottom: 20px;
-  font-weight: 800;
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  line-height: 1.18;
+  margin-bottom: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   color: white;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
 .hero h2 span {
@@ -175,86 +176,84 @@ nav a:hover {
 }
 
 .hero p {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  color: #d0d0d0;
-  margin-bottom: 36px;
-  max-width: 600px;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.6;
-  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+  line-height: 1.65;
+  font-weight: 400;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .btn {
   display: inline-block;
-  padding: 15px 32px;
+  padding: 13px 28px;
   background: var(--primary);
   color: white;
   text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 550;
+  font-size: 0.95rem;
   border: none;
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 8px 25px rgba(225, 6, 0, 0.35);
+  letter-spacing: -0.01em;
 }
 
 .btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(225, 6, 0, 0.45);
   background: #c00500;
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   background: transparent;
   color: white;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.35);
   color: white;
 }
 
 /* ========== SECCIONES ========== */
 .section {
-  padding: 90px 6%;
+  padding: 100px 6%;
   position: relative;
   z-index: 1;
   background: transparent;
 }
 
 .section-alt {
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(8, 8, 8, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .section-title {
   text-align: center;
-  font-size: clamp(1.7rem, 4vw, 2.2rem);
-  margin-bottom: 50px;
-  font-weight: 750;
+  font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+  margin-bottom: 48px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
   color: white;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* ========== GRID + CARDS ========== */
+/* ========== GRID + CARDS MINIMAL ========== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
-  max-width: 1100px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -263,12 +262,12 @@ nav a:hover {
 .card2,
 .card3,
 .card4 {
-  background: rgba(22, 22, 22, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  padding: 30px 26px;
+  padding: 28px 24px;
   transition: var(--transition);
   position: relative;
   cursor: pointer;
@@ -282,9 +281,8 @@ nav a:hover {
 .card2:hover,
 .card3:hover,
 .card4:hover {
-  transform: translateY(-6px);
-  border-color: rgba(225, 6, 0, 0.4);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(22, 22, 22, 0.85);
 }
 
 .card .icon,
@@ -292,8 +290,9 @@ nav a:hover {
 .card2 .icon,
 .card3 .icon,
 .card4 .icon {
-  font-size: 2.1rem;
-  margin-bottom: 16px;
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  opacity: 0.9;
 }
 
 .card h3,
@@ -301,8 +300,10 @@ nav a:hover {
 .card2 h3,
 .card3 h3,
 .card4 h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: white;
 }
 
@@ -312,22 +313,22 @@ nav a:hover {
 .card3 p,
 .card4 p {
   color: var(--text-muted);
-  line-height: 1.6;
-  font-size: 0.95rem;
+  line-height: 1.55;
+  font-size: 0.9rem;
   margin: 0;
 }
 
 .extra-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, margin 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.35s ease, margin 0.25s ease, opacity 0.25s ease;
   opacity: 0;
   text-align: left;
 }
 
 .extra-content.open {
-  max-height: 280px;
-  margin-top: 18px;
+  max-height: 260px;
+  margin-top: 16px;
   opacity: 1;
 }
 
@@ -338,29 +339,30 @@ nav a:hover {
 }
 
 .extra-content li {
-  padding: 6px 0 6px 22px;
+  padding: 5px 0 5px 18px;
   position: relative;
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
 .extra-content li::before {
-  content: "✓";
+  content: "·";
   position: absolute;
   left: 0;
   color: var(--primary);
   font-weight: bold;
 }
 
-.card1 { border-top: 3px solid #6366f1; }
-.card2 { border-top: 3px solid #10b981; }
-.card3 { border-top: 3px solid #3b82f6; }
-.card4 { border-top: 3px solid #f59e0b; }
+.card1 { border-top: 2px solid rgba(99, 102, 241, 0.5); }
+.card2 { border-top: 2px solid rgba(16, 185, 129, 0.5); }
+.card3 { border-top: 2px solid rgba(59, 130, 246, 0.5); }
+.card4 { border-top: 2px solid rgba(245, 158, 11, 0.5); }
 
-/* ========== PAQUETES ========== */
+/* ========== PAQUETES MINIMAL ========== */
 .packages {
   grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .packages .card {
@@ -369,13 +371,20 @@ nav a:hover {
   flex-direction: column;
   align-items: center;
   cursor: default;
+  padding: 32px 24px;
+}
+
+.packages .card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
 }
 
 .price {
-  font-size: 1.9rem;
-  font-weight: 800;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   color: var(--primary);
-  margin: 12px 0 20px;
+  margin: 12px 0 22px;
 }
 
 .card ul {
@@ -386,15 +395,15 @@ nav a:hover {
 }
 
 .card ul li {
-  padding: 8px 0;
-  padding-left: 24px;
+  padding: 7px 0;
+  padding-left: 20px;
   position: relative;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .card ul li::before {
-  content: "✓";
+  content: "·";
   position: absolute;
   left: 0;
   color: var(--primary);
@@ -402,110 +411,111 @@ nav a:hover {
 }
 
 .card-popular {
-  border: 2px solid var(--primary);
-  background: linear-gradient(160deg, rgba(26, 10, 10, 0.9), rgba(22, 22, 22, 0.9));
-  transform: scale(1.04);
+  border: 1px solid rgba(225, 6, 0, 0.45);
+  background: rgba(22, 10, 10, 0.75);
+  transform: none;
   z-index: 2;
 }
 
 .badge {
   position: absolute;
-  top: -12px;
+  top: -11px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--primary);
   color: white;
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 5px 14px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 4px 12px;
   border-radius: 50px;
 }
 
-/* ========== CTA ========== */
+/* ========== CTA MINIMAL ========== */
 .cta {
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding: 110px 6%;
-  min-height: 420px;
+  padding: 100px 6%;
+  min-height: 360px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(225, 6, 0, 0.92), rgba(176, 5, 0, 0.92));
+  background: linear-gradient(160deg, rgba(225, 6, 0, 0.88), rgba(160, 5, 0, 0.9));
   z-index: 1;
 }
 
 .cta-content {
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  max-width: 640px;
 }
 
 .cta h2 {
-  font-size: clamp(1.7rem, 4.2vw, 2.5rem);
-  margin-bottom: 32px;
+  font-size: clamp(1.6rem, 3.8vw, 2.2rem);
+  margin-bottom: 28px;
   line-height: 1.3;
   color: white;
-  font-weight: 700;
+  font-weight: 650;
+  letter-spacing: -0.02em;
 }
 
 .cta .btn {
   background: white;
   color: var(--primary);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  font-weight: 700;
+  font-weight: 600;
+  border-radius: 8px;
 }
 
 .cta .btn:hover {
-  background: #f5f5f5;
-  transform: translateY(-3px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
+  background: #f0f0f0;
+  transform: translateY(-1px);
 }
 
-/* ========== FORMULARIO ========== */
+/* ========== FORMULARIO MINIMAL ========== */
 form {
-  max-width: 500px;
+  max-width: 440px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 input, textarea {
-  padding: 16px 18px;
-  border-radius: 14px;
-  border: 1px solid #2a2a2a;
-  font-size: 1rem;
-  background: rgba(20, 20, 20, 0.85);
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.95rem;
+  background: rgba(16, 16, 16, 0.8);
   color: white;
   transition: var(--transition);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: #777;
+  color: #666;
 }
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.15);
+  border-color: rgba(225, 6, 0, 0.5);
+  background: rgba(20, 20, 20, 0.9);
 }
 
 textarea {
-  min-height: 130px;
+  min-height: 120px;
   resize: vertical;
 }
 
 /* ========== MAPA ========== */
 .map-responsive {
   position: relative;
-  max-width: 900px;
+  max-width: 860px;
   margin: 0 auto;
-  padding-bottom: 48%;
-  border-radius: 20px;
+  padding-bottom: 46%;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .map-responsive iframe {
@@ -514,17 +524,17 @@ textarea {
   width: 100%;
   height: 100%;
   border: 0;
-  filter: grayscale(30%) contrast(1.1);
+  filter: grayscale(40%) contrast(1.05);
 }
 
-/* ========== FOOTER ========== */
+/* ========== FOOTER MINIMAL ========== */
 footer {
   text-align: center;
-  padding: 30px 6%;
-  font-size: 0.9rem;
-  color: #777;
-  background: rgba(10, 10, 10, 0.9);
-  border-top: 1px solid #1a1a1a;
+  padding: 28px 6%;
+  font-size: 0.85rem;
+  color: #666;
+  background: rgba(6, 6, 6, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
   z-index: 1;
 }
@@ -536,18 +546,20 @@ footer {
   right: 24px;
   background: #25d366;
   color: white;
-  padding: 14px 20px;
+  padding: 12px 18px;
   border-radius: 50px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 550;
+  font-size: 0.9rem;
   z-index: 999;
-  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
   transition: var(--transition);
+  border: none;
+  box-shadow: none;
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.06);
+  transform: scale(1.04);
+  background: #1fb855;
 }
 
 .whatsapp-float.hide {
@@ -560,33 +572,33 @@ footer {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: #1a1a1a;
-  padding: 18px 24px;
-  border-radius: 16px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  background: rgba(16, 16, 16, 0.95);
+  padding: 16px 20px;
+  border-radius: 12px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
   text-align: center;
-  max-width: 400px;
-  width: 92%;
-  border: 1px solid #2a2a2a;
+  max-width: 380px;
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .banner-cookies p {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .banner-cookies button {
   background: var(--primary);
   color: white;
   border: none;
-  padding: 10px 22px;
-  border-radius: 50px;
-  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-weight: 550;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -594,9 +606,6 @@ footer {
 @media (max-width: 900px) {
   .packages {
     grid-template-columns: 1fr 1fr;
-  }
-  .card-popular {
-    transform: none;
   }
 }
 
@@ -609,23 +618,23 @@ footer {
     position: fixed;
     top: 0;
     right: 0;
-    width: 280px;
+    width: 260px;
     height: 100vh;
-    background: rgba(15, 15, 15, 0.98);
+    background: rgba(10, 10, 10, 0.97);
     backdrop-filter: blur(20px);
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 100px 28px 40px;
-    gap: 12px;
+    padding: 90px 24px 40px;
+    gap: 8px;
     transform: translateX(100%);
     opacity: 0;
     visibility: hidden;
     transition: 
-      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.4s ease,
-      visibility 0.4s;
-    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.5);
+      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.35s ease,
+      visibility 0.35s;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
     z-index: 1001;
   }
 
@@ -638,12 +647,12 @@ footer {
   nav a {
     width: 100%;
     text-align: left;
-    padding: 14px 16px;
-    font-size: 1.05rem;
+    padding: 12px 14px;
+    font-size: 1rem;
     color: var(--text);
     opacity: 0;
-    transform: translateX(20px);
-    transition: all 0.3s ease;
+    transform: translateX(16px);
+    transition: all 0.25s ease;
   }
 
   nav.active a {
@@ -651,14 +660,14 @@ footer {
     transform: translateX(0);
   }
 
-  nav.active a:nth-child(1) { transition-delay: 0.10s; }
-  nav.active a:nth-child(2) { transition-delay: 0.15s; }
-  nav.active a:nth-child(3) { transition-delay: 0.20s; }
-  nav.active a:nth-child(4) { transition-delay: 0.25s; }
+  nav.active a:nth-child(1) { transition-delay: 0.08s; }
+  nav.active a:nth-child(2) { transition-delay: 0.12s; }
+  nav.active a:nth-child(3) { transition-delay: 0.16s; }
+  nav.active a:nth-child(4) { transition-delay: 0.20s; }
 
   .header-container {
-    border-radius: 18px;
-    padding: 11px 18px;
+    border-radius: 14px;
+    padding: 10px 16px;
   }
 
   .packages {
@@ -666,22 +675,22 @@ footer {
   }
 
   .hero {
-    padding: 130px 5% 70px;
+    padding: 120px 5% 80px;
+  }
+
+  .section {
+    padding: 70px 5%;
   }
 
   .cta {
-    padding: 80px 5%;
-    min-height: 360px;
+    padding: 70px 5%;
+    min-height: 300px;
   }
 }
 
 @media (max-width: 480px) {
   .hero h2 {
-    font-size: 1.75rem;
-  }
-
-  .section {
-    padding: 60px 5%;
+    font-size: 1.7rem;
   }
 
   .hero-buttons {
@@ -692,16 +701,16 @@ footer {
   .whatsapp-float {
     bottom: 16px;
     right: 16px;
-    padding: 12px 16px;
-    font-size: 0.9rem;
+    padding: 11px 15px;
+    font-size: 0.85rem;
   }
 
   .banner-cookies {
-    bottom: 14px;
+    bottom: 12px;
     padding: 14px 16px;
   }
 
   .cta h2 {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
   }
 }
